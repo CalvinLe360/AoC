@@ -2014,6 +2014,10 @@ directional = {
 
 def getTrigDistance(pos1, pos2):
     return math.sqrt(pow(pos1[0] - pos2[0], 2) + pow(pos1[1] - pos2[1], 2))
+def sign(x):
+    if x < 0: return -1
+    elif x > 0: return 1
+    return 0
 
 # Part 1
 Hx, Hy = 0, 0
@@ -2028,9 +2032,8 @@ for m in movements:
         Hy += direction[1]
 
         if getTrigDistance([Hx, Hy], [Tx, Ty]) >= 2:
-            cardinal = [[Hx - 1, Hy], [Hx + 1, Hy], [Hx, Hy - 1], [Hx, Hy + 1]]
-            distCardinal = [getTrigDistance([Tx, Ty], x) for x in cardinal]
-            Tx, Ty = cardinal[distCardinal.index(min(distCardinal))]
+            Tx = Hx - direction[0]
+            Ty = Hy - direction[1]
 
         visited[str(Tx) + "," + str(Ty)] = 1
 
@@ -2044,7 +2047,7 @@ example = [
 visitedP2 = {}
 knots = [[0, 0] for _ in range(10)]
 
-for m in example:
+for m in movements:
     direction, steps = m.split()
     direction = directional[direction]
     steps = int(steps)
@@ -2055,10 +2058,8 @@ for m in example:
 
         for i in range(9):
             if getTrigDistance(knots[i], knots[i+1]) >= 2:
-                frontKnotX, frontKnotY = knots[i]
-                cardinal = [[frontKnotX - 1, frontKnotY], [frontKnotX + 1, frontKnotY], [frontKnotX, frontKnotY - 1], [frontKnotX, frontKnotY + 1]]
-                distCardinal = [getTrigDistance(knots[i+1], x) for x in cardinal]
-                knots[i+1] = cardinal[distCardinal.index(min(distCardinal))]
+                knots[i+1][0] += sign(knots[i][0] - knots[i+1][0])
+                knots[i+1][1] += sign(knots[i][1] - knots[i+1][1])
 
         # print(knots)
         visitedP2[str(knots[9][0]) + "," + str(knots[9][1])] = 1
