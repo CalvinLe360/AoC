@@ -188,5 +188,5 @@ for y in range(6):
         if str(x) + "," + str(y) in pixels:
             print("#", end="")
         else:
-            print(".", end="")
+            print(" ", end="")
     print()
