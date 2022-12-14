@@ -198,7 +198,7 @@ def checkRocks(coords, bound):
 def printScreen(minX, maxX, minY, maxY):
     for y in range(minY, maxY + 1):
         for x in range(minX, maxX + 1):
-            if checkRocks([x, y]):
+            if checkRocks([x, y], maxY):
                 print("#", end="")
             elif y == 0 and x == 500:
                 print("+", end="")
@@ -231,7 +231,7 @@ mapX = [int(x.split(",")[0]) for x in rocks.keys()]
 mapY = [int(x.split(",")[1]) for x in rocks.keys()]
 bigFloor = max(mapY) + 2
 
-# printScreen(min(mapX), max(mapX), 0, max(mapY))
+printScreen(min(mapX), max(mapX), 0, bigFloor)
 # print(void)
 
 sand = 0
